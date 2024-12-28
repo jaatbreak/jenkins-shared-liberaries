@@ -1,13 +1,7 @@
-def call(String image, String tag) {
-    // Use Jenkins credentials with the ID 'dockerhub_secret'
+def dockerPush(String image, String tag) {
     withCredentials([usernamePassword(credentialsId: 'dockerhub_secret', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-        // Log in to Docker
         sh """
             docker login -u '${DOCKER_USERNAME}' -p '${DOCKER_PASSWORD}'
-        """
-        
-        // Push the Docker image
-        sh """
             docker push ${DOCKER_USERNAME}/${image}:${tag}
         """
     }
